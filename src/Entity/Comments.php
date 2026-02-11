@@ -23,6 +23,12 @@ class Comments
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
 
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Users $users = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Post $post = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +66,30 @@ class Comments
     public function setStatus(?string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUsers(): ?Users
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?Users $users): static
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): static
+    {
+        $this->post = $post;
 
         return $this;
     }
