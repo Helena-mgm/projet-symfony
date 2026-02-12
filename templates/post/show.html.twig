@@ -25,7 +25,8 @@
       {% if is_granted('ROLE_ADMIN') %}
         <hr>
         <div class="d-flex gap-2">
-          {# <a class="btn btn-warning" href="{{ path('app_post_edit', {id: post.id}) }}">Modifier</a> #}
+           <a class="btn btn-warning" href="{{ path('app_post_show', {id: post.id}) }}"
+ 
         </div>
       {% endif %}
     </div>

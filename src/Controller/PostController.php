@@ -22,6 +22,14 @@ final class PostController extends AbstractController
         ]);
     }
 
+    #[Route('/post/{id}', name: 'app_post_show', requirements: ['id' => '\d+'])]
+    public function show(Post $post): Response
+    {
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+        ]);
+    }
+
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/post/new', name: 'app_post_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
