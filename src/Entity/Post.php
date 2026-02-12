@@ -28,6 +28,8 @@ class Post
     public function __construct()
     {
         $this->publishedAt = new \DateTimeImmutable();
+        $this->comments = new ArrayCollection();
+
     }
 
     #[ORM\Column(length: 255)]
@@ -45,10 +47,7 @@ class Post
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?Users $users = null;
 
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
+    
 
     public function getId(): ?int
     {

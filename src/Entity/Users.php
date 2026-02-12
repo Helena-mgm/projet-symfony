@@ -44,6 +44,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->comments = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -72,11 +74,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'users')]
     private Collection $posts;
 
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-        $this->posts = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -169,6 +166,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials(): void
+    {
+    }
+
 
     /**
      * @return Collection<int, Comments>
