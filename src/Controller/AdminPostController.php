@@ -29,7 +29,7 @@ final class AdminPostController extends AbstractController
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-        $post->setAuthor($this->getUser());
+        $post->setUsers($this->getUsers());
         $post->setPublishedAt(new \DateTimeImmutable());
 
 

@@ -1,14 +1,128 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Panel Admin{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container py-4">
 
-<div class="example-wrapper">
-   <h1>Dashboard Admin</h1>
+  <div class="mb-4">
+    <h1 class="fw-bold">Panel Admin</h1>
+    <p class="text-muted mb-0">Gestion des catégories et des posts</p>
+  </div>
+
+  <div class="row g-4">
+
+   {# ---- Création catégorie ---- #}
+<div class="col-md-4">
+  <div class="card shadow-sm h-100">
+    <div class="card-header bg-primary text-white fw-semibold">
+      Nouvelle catégorie
+    </div>
+    <div class="card-body">
+      {{ form_start(categoryForm) }}
+
+        <div class="mb-3">
+          {{ form_label(categoryForm.name, null, {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(categoryForm.name, {'attr': {'class': 'form-control'}}) }}
+          {{ form_errors(categoryForm.name) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(categoryForm.description, null, {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(categoryForm.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+          {{ form_errors(categoryForm.description) }}
+        </div>
+
+        <button class="btn btn-primary w-100">Créer la catégorie</button>
+
+      {{ form_end(categoryForm) }}
+    </div>
+  </div>
 </div>
+
+
+{# ---- Création post ---- #}
+<div class="col-md-8">
+  <div class="card shadow-sm h-100">
+    <div class="card-header bg-success text-white fw-semibold">
+      Nouveau post
+    </div>
+    <div class="card-body">
+      {{ form_start(postForm) }}
+
+        <div class="mb-3">
+          {{ form_label(postForm.title, null, {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(postForm.title, {'attr': {'class': 'form-control'}}) }}
+          {{ form_errors(postForm.title) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(postForm.content, null, {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(postForm.content, {'attr': {'class': 'form-control', 'rows': 7}}) }}
+          {{ form_errors(postForm.content) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(postForm.category, null, {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(postForm.category, {'attr': {'class': 'form-select'}}) }}
+          {{ form_errors(postForm.category) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(postForm.picture, null, {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(postForm.picture, {'attr': {'class': 'form-control'}}) }}
+          {{ form_errors(postForm.picture) }}
+        </div>
+
+        <button class="btn btn-success w-100">Publier le post</button>
+
+      {{ form_end(postForm) }}
+    </div>
+
+<hr class="my-4">
+
+<div class="card shadow-sm">
+  <div class="card-header bg-dark text-white fw-semibold">
+    Commentaires en attente
+  </div>
+  <div class="card-body">
+
+    {% if pendingComments is empty %}
+      <p class="text-muted mb-0">Aucun commentaire à valider 🎉</p>
+    {% else %}
+      <div class="list-group">
+        {% for c in pendingComments %}
+          <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-start gap-3">
+              <div>
+                <div class="small text-muted mb-1">
+                  Post #{{ c.post.id }}
+                  — {{ c.users ? c.users.email : '—' }}
+                </div>
+                <div>{{ c.content|nl2br }}</div>
+              </div>
+
+              <div class="d-flex gap-2">
+                <form method="post" action="{{ path('app_admin_comments_approve', {id: c.id}) }}">
+                  <button class="btn btn-success btn-sm">Valider</button>
+                </form>
+
+                <form method="post" action="{{ path('app_admin_comments_reject', {id: c.id}) }}">
+                  <button class="btn btn-danger btn-sm">Refuser</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+
+  </div>
+</div>
+
+
 {% endblock %}
