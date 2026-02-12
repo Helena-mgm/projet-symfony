@@ -25,6 +25,11 @@ class Post
     #[ORM\Column]
     private ?\DateTimeImmutable $publishedAt = null;
 
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTimeImmutable();
+    }
+
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
 
