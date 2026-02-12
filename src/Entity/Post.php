@@ -31,6 +31,9 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -80,6 +83,18 @@ class Post
     public function setPicture(string $picture): static
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
