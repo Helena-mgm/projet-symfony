@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Comments;
+use App\Entity\Users;
+use App\Entity\Post;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -16,9 +18,9 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
             $comment->setContent("Commentaire $i : commentaire");
             $comment->setStatus($i % 3 === 0 ? 'pending' : 'approved'); 
 
-            $comment->setUsers($this->getReference('user-'.($i % 5)));
+            $comment->setUsers($this->getReference('user-'.($i % 5), Users::class));
 
-            $comment->setPost($this->getReference('post-'.($i % 6)));
+            $comment->setPost($this->getReference('post-'.((($i % 6) + 1)), Post::class));
 
             $manager->persist($comment);
         }
