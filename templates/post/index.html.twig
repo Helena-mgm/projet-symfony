@@ -1,40 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Articles{% endblock %}
+{% block title %}Articles{% endblock %}
 
 {% block body %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Articles</h1>
 
-<div class="container mt-5">
+    {% if is_granted('ROLE_ADMIN') %}
+      <a class="btn btn-primary" href="{{ path('app_post_new') }}">+ Nouvel article</a>
+    {% endif %}
+  </div>
 
-    {% set produits = [
-        { nom: 'Premier article', categorie: 'Truc' },
-        { nom: 'Deuxieme article', categorie: 'Random' },
-        { nom: 'Troisieme article', categorie: 'Misc' }
-    ] %}
+  <div class="row g-3">
+    {% for post in posts %}
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          {% if post.picture %}
+            <img src="{{ post.picture }}" class="card-img-top" alt="{{ post.title }}">
+          {% endif %}
 
-    <h2 class="mb-4">Liste des articles</h2>
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text text-muted small mb-3">
+              {% if post.publishedAt %}Publié le {{ post.publishedAt|date('d/m/Y') }}{% endif %}
+            </p>
 
-    <table class="table table-striped table-hover shadow-sm">
-        <thead class="table-dark">
-            <tr>
-                <th>Nom</th>
-                <th>Catégorie</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for produit in produits %}
-                <tr>
-                    <td>{{ produit.nom }}</td>
-                    <td>
-                        <span class="badge bg-primary">
-                            {{ produit.categorie }}
-                        </span>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            <a class="btn btn-outline-primary" href="{{ path('app_post_show', {id: post.id}) }}">
+              Lire
+            </a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-muted">Aucun article pour le moment.</p>
+    {% endfor %}
+  </div>
 </div>
-
 {% endblock %}
