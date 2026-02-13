@@ -1,4 +1,38 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+  {{ form_errors(form) }}
+
+  <div class="mb-3">
+    {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.title) }}
+  </div>
+
+  <div class="mb-3">
+    {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 6}}) }}
+    {{ form_errors(form.content) }}
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="mb-3">
+        {{ form_label(form.category, null, {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+        {{ form_errors(form.category) }}
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-3">
+        {{ form_label(form.picture, null, {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.picture, {'attr': {'class': 'form-control', 'accept': 'image/*'}}) }}
+        {{ form_errors(form.picture) }}
+        <div class="form-text">Choisis une nouvelle image pour remplacer l’ancienne (optionnel).</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+  <a href="{{ path('app_admin_post_index') }}" class="btn btn-outline-secondary ms-2">Annuler</a>
+
 {{ form_end(form) }}

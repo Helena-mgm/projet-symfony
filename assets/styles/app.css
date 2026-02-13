@@ -125,3 +125,69 @@ a:hover {
 		margin-top: .5rem;
 	}
 }
+
+/* Admin panel specific styles */
+.admin-dashboard {
+	--admin-accent: rgba(231,84,128,0.06);
+}
+
+.admin-dashboard .card {
+	border-radius: .6rem;
+	background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,250,252,0.98));
+}
+
+.admin-dashboard .card-header {
+	background: linear-gradient(90deg, rgba(231,84,128,0.12), rgba(255,214,232,0.08));
+	color: #3a2a31;
+	font-weight: 600;
+}
+
+.admin-dashboard .card-header.bg-dark {
+	background: linear-gradient(90deg, rgba(60,20,30,0.85), rgba(231,84,128,0.12));
+	color: #fff;
+}
+
+.admin-dashboard .list-group-item {
+	border-left: 4px solid transparent;
+}
+.admin-dashboard .list-group-item.pending {
+	border-left-color: var(--bs-primary);
+	background: rgba(var(--bs-primary-rgb), 0.03);
+}
+
+.admin-dashboard .small.text-muted {
+	color: #6b4b55 !important;
+}
+
+.admin-dashboard table.table th,
+.admin-dashboard table.table td {
+	vertical-align: middle;
+}
+
+.admin-dashboard .btn-outline-primary {
+	border-radius: .35rem;
+	padding: .35rem .5rem;
+}
+
+.admin-dashboard .btn-sm {
+	padding: .25rem .45rem;
+}
+
+.admin-dashboard .actions {
+	display: flex;
+	gap: .4rem;
+	align-items: center;
+}
+
+.admin-dashboard .card .form-text {
+	color: #7a555f;
+}
+
+/* Make the comment cards grow less on narrow viewports */
+@media (max-width: 768px) {
+	.admin-dashboard .card-body .list-group-item {
+		padding-left: .75rem;
+		padding-right: .75rem;
+	}
+}
+

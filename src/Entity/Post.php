@@ -32,7 +32,7 @@ class Post
 
     }
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
@@ -95,7 +95,7 @@ class Post
         return $this->picture;
     }
 
-    public function setPicture(string $picture): static
+    public function setPicture(?string $picture): static
     {
         $this->picture = $picture;
 

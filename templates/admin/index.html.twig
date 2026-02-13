@@ -6,167 +6,234 @@
 <div class="container py-4">
 
   <div class="mb-4">
-    <h1 class="fw-bold">Panel Admin</h1>
-    <p class="text-muted mb-0">Gestion des catégories et des posts</p>
+    <h1 class="fw-bold mb-1">Panel Admin</h1>
+    <p class="text-muted mb-0">Gestion des catégories, posts, commentaires et utilisateurs</p>
   </div>
 
-  <div class="row g-4">
+  <div class="row g-4 mb-4">
 
-   {# ---- Création catégorie ---- #}
-<div class="col-md-4">
-  <div class="card shadow-sm h-100">
-    <div class="card-header bg-primary text-white fw-semibold">
-      Nouvelle catégorie
-    </div>
-    <div class="card-body">
-      {{ form_start(categoryForm) }}
-
-        <div class="mb-3">
-          {{ form_label(categoryForm.name, null, {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(categoryForm.name, {'attr': {'class': 'form-control'}}) }}
-          {{ form_errors(categoryForm.name) }}
+    <div class="col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-primary text-white fw-semibold">
+          Nouvelle catégorie
         </div>
+        <div class="card-body">
+          {{ form_start(categoryForm) }}
 
-        <div class="mb-3">
-          {{ form_label(categoryForm.description, null, {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(categoryForm.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
-          {{ form_errors(categoryForm.description) }}
+          <div class="mb-3">
+            {{ form_label(categoryForm.name, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(categoryForm.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(categoryForm.name) }}
+          </div>
+
+          <div class="mb-3">
+            {{ form_label(categoryForm.description, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(categoryForm.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+            {{ form_errors(categoryForm.description) }}
+          </div>
+
+          <button class="btn btn-primary w-100">
+            Créer la catégorie
+          </button>
+
+          {{ form_end(categoryForm) }}
         </div>
-
-        <button class="btn btn-primary w-100">Créer la catégorie</button>
-
-      {{ form_end(categoryForm) }}
-    </div>
-  </div>
-</div>
-
-
-{# ---- Création post ---- #}
-<div class="col-md-8">
-  <div class="card shadow-sm h-100">
-    <div class="card-header bg-success text-white fw-semibold">
-      Nouveau post
-    </div>
-    <div class="card-body">
-      {{ form_start(postForm) }}
-
-        <div class="mb-3">
-          {{ form_label(postForm.title, null, {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(postForm.title, {'attr': {'class': 'form-control'}}) }}
-          {{ form_errors(postForm.title) }}
-        </div>
-
-        <div class="mb-3">
-          {{ form_label(postForm.content, null, {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(postForm.content, {'attr': {'class': 'form-control', 'rows': 7}}) }}
-          {{ form_errors(postForm.content) }}
-        </div>
-
-        <div class="mb-3">
-          {{ form_label(postForm.category, null, {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(postForm.category, {'attr': {'class': 'form-select'}}) }}
-          {{ form_errors(postForm.category) }}
-        </div>
-
-        <div class="mb-3">
-          {{ form_label(postForm.picture, null, {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(postForm.picture, {'attr': {'class': 'form-control'}}) }}
-          {{ form_errors(postForm.picture) }}
-        </div>
-
-        <button class="btn btn-success w-100">Publier le post</button>
-
-      {{ form_end(postForm) }}
+      </div>
     </div>
 
-<hr class="my-4">
+    <div class="col-lg-8">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-success text-white fw-semibold">
+          Nouveau post
+        </div>
 
-<div class="card shadow-sm">
-  <div class="card-header bg-dark text-white fw-semibold">
-    Commentaires en attente
-  </div>
-  <div class="card-body">
+        <div class="card-body">
+          {{ form_start(postForm) }}
 
-    {% if pendingComments is empty %}
-      <p class="text-muted mb-0">Aucun commentaire à valider 🎉</p>
-    {% else %}
-      <div class="list-group">
-        {% for c in pendingComments %}
-          <div class="list-group-item">
-            <div class="d-flex justify-content-between align-items-start gap-3">
-              <div>
-                <div class="small text-muted mb-1">
-                  Post #{{ c.post.id }}
-                  — {{ c.users ? c.users.email : '—' }}
-                </div>
-                <div>{{ c.content|nl2br }}</div>
+          <div class="mb-3">
+            {{ form_label(postForm.title, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(postForm.title, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(postForm.title) }}
+          </div>
+
+          <div class="mb-3">
+            {{ form_label(postForm.content, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(postForm.content, {'attr': {'class': 'form-control', 'rows': 6}}) }}
+            {{ form_errors(postForm.content) }}
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form_label(postForm.category, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(postForm.category, {'attr': {'class': 'form-select'}}) }}
+                {{ form_errors(postForm.category) }}
               </div>
+            </div>
 
-              <div class="d-flex gap-2">
-                <form method="post" action="{{ path('app_admin_comments_approve', {id: c.id}) }}">
-                  <button class="btn btn-success btn-sm">Valider</button>
-                </form>
-
-                <form method="post" action="{{ path('app_admin_comments_reject', {id: c.id}) }}">
-                  <button class="btn btn-danger btn-sm">Refuser</button>
-                </form>
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form_label(postForm.picture, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(postForm.picture, {'attr': {'class': 'form-control', 'accept': 'image/*'}}) }}
+                {{ form_errors(postForm.picture) }}
+                <div class="form-text">Formats : jpg, png, gif — Taille max selon config serveur.</div>
               </div>
             </div>
           </div>
-        {% endfor %}
+
+          <button class="btn btn-success w-100">
+            Publier le post
+          </button>
+
+          {{ form_end(postForm) }}
+        </div>
       </div>
-    {% endif %}
+    </div>
 
+  </div>
 
-<h1>Utilisateurs</h1>
+  <div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">
+      Posts
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 70px;">ID</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Catégorie</th>
+            <th>Publié le</th>
+            <th class="text-center">Com.</th>
+            <th style="width: 220px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+          <tr>
+            <td>{{ post.id }}</td>
+            <td class="fw-semibold">{{ post.title }}</td>
+            <td>{{ post.users ? post.users.email : '—' }}</td>
+            <td>{{ post.category ? post.category.name : '—' }}</td>
+            <td>{{ post.publishedAt ? post.publishedAt|date('Y-m-d H:i') : '—' }}</td>
+            <td class="text-center">
+              <span class="badge text-bg-secondary">{{ post.comments|length }}</span>
+            </td>
+            <td>
+              <div class="d-flex gap-2">
+                <a href="{{ path('app_admin_post_edit', {id: post.id}) }}" class="btn btn-sm btn-outline-primary">
+                  Éditer
+                </a>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
+                <form method="post" action="{{ path('app_admin_post_delete', {id: post.id}) }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                  <button class="btn btn-sm btn-outline-danger"
+                          onclick="return confirm('Supprimer cet article ?');">
+                    Supprimer
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="7" class="text-muted">Aucun article trouvé.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white fw-semibold">
+      Commentaires en attente
+    </div>
+    <div class="card-body">
+      {% if pendingComments is empty %}
+        <p class="text-muted mb-0">Aucun commentaire à valider </p>
+      {% else %}
+        <div class="list-group">
+          {% for c in pendingComments %}
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <div>
+                  <div class="small text-muted mb-1">
+                    Post #{{ c.post.id }} — {{ c.users ? c.users.email : '—' }}
+                  </div>
+                  <div>{{ c.content|nl2br }}</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <form method="post" action="{{ path('app_admin_comments_approve', {id: c.id}) }}">
+                    <button class="btn btn-success btn-sm">Valider</button>
+                  </form>
+
+                  <form method="post" action="{{ path('app_admin_comments_reject', {id: c.id}) }}">
+                    <button class="btn btn-danger btn-sm">Refuser</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header fw-semibold">
+      Utilisateurs
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th style="width:70px;">ID</th>
             <th>Email</th>
             <th>Prénom</th>
             <th>Nom</th>
             <th>Rôles</th>
             <th>Créé le</th>
             <th>Actif</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-  {% for user in users %}
-    <tr>
-      <td>{{ user.id }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.lastName }}</td>
-      <td>{{ user.roles|join(', ') }}</td>
-      <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i') : '' }}</td>
-      <td>{{ user.isActive ? 'Oui' : 'Non' }}</td>
+            <th style="width:160px;">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td><span class="badge text-bg-secondary">{{ user.roles|join(', ') }}</span></td>
+            <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i') : '—' }}</td>
             <td>
-                <form method="post" action="{{ path('app_admin_users_toggle', {id: user.id}) }}" style="display:inline">
-                    <input type="hidden" name="_token" value="{{ csrf_token('toggle-user' ~ user.id) }}">
-                    {% if user.isActive %}
-                        <button class="btn btn-sm btn-warning">Désactiver</button>
-                    {% else %}
-                        <button class="btn btn-sm btn-success">Activer</button>
-                    {% endif %}
-                </form>
+              {% if user.isActive %}
+                <span class="badge text-bg-success">Oui</span>
+              {% else %}
+                <span class="badge text-bg-danger">Non</span>
+              {% endif %}
             </td>
-        </tr>
-    {% else %}
-        <tr><td colspan="8">Aucun utilisateur trouvé.</td></tr>
-    {% endfor %}
-</table>
-
-
-
+            <td>
+              <form method="post" action="{{ path('app_admin_users_toggle', {id: user.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('toggle-user' ~ user.id) }}">
+                {% if user.isActive %}
+                  <button class="btn btn-sm btn-warning w-100">Désactiver</button>
+                {% else %}
+                  <button class="btn btn-sm btn-success w-100">Activer</button>
+                {% endif %}
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="8" class="text-muted">Aucun utilisateur trouvé.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
+
 </div>
-
-
-  </div>
-</div>
-
-
 {% endblock %}

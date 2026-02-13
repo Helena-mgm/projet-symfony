@@ -24,8 +24,9 @@ final class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/{id}', name: 'app_post_show')]
-    public function show(Post $post,Request $request,EntityManagerInterface $entityManager): 
+    // ensure that the {id} parameter is numeric so that '/post/new' does not match this route
+    #[Route('/post/{id}', name: 'app_post_show', requirements: ['id' => '\\d+'])]
+    public function show(Post $post, Request $request, EntityManagerInterface $entityManager): 
     Response {
     $comment = new Comments();
     $form = $this->createForm(CommentsType::class, $comment);
@@ -68,14 +69,20 @@ final class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('picture')->getData();
+
+            if ($file) {
+                $filename = uniqid().'.'.$file->guessExtension();
+                $file->move($this->getParameter('kernel.project_dir').'/public/uploads', $filename);
+                $post->setPicture('/uploads/'.$filename);
+            }   
             $entityManager->persist($post);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_post_index');
         }
-
+    
         return $this->render('post/new.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
+        ]);}
 }
