@@ -4,6 +4,7 @@ namespace App\Entity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,9 +31,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'users.firstname.not_blank')]
+    #[Assert\Length(min: 2, minMessage: 'users.firstname.min_length')]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'users.lastname.not_blank')]
+    #[Assert\Length(min: 2, minMessage: 'users.lastname.min_length')]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -61,6 +66,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(options: ["default" => true])]
+    private bool $isActive = true;
 
     /**
      * @var Collection<int, Comments>
@@ -158,6 +166,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static

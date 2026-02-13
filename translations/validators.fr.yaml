@@ -1,0 +1,4 @@
+users.firstname.not_blank: "Le prénom ne peut pas être vide."
+users.firstname.min_length: "Le prénom doit contenir au moins {{ limit }} caractères."
+users.lastname.not_blank: "Le nom ne peut pas être vide."
+users.lastname.min_length: "Le nom doit contenir au moins {{ limit }} caractères."

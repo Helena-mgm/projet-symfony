@@ -1,0 +1,4 @@
+users.firstname.not_blank: "First name cannot be blank."
+users.firstname.min_length: "First name must be at least {{ limit }} characters long."
+users.lastname.not_blank: "Last name cannot be blank."
+users.lastname.min_length: "Last name must be at least {{ limit }} characters long."
