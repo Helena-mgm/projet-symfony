@@ -218,7 +218,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeComment(Comments $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
             if ($comment->getUsers() === $this) {
                 $comment->setUsers(null);
             }
@@ -248,7 +247,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function removePost(Post $post): static
     {
         if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
             if ($post->getUsers() === $this) {
                 $post->setUsers(null);
             }

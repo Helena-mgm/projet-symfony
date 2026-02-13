@@ -1,0 +1,127 @@
+
+:root {
+	/* primary color used by .btn-primary, links, etc. */
+	--bs-primary: #e75480; /* rose pink */
+	--bs-primary-rgb: 231, 84, 128;
+
+	/* secondary/accent */
+	--bs-secondary: #ffd6e8; /* pale pink */
+	--bs-secondary-rgb: 255, 214, 232;
+
+	/* body background */
+	--bs-body-bg: #fff7fb;
+	--bs-body-color: #3a2a31; /* dark muted for readability */
+
+	/* card background */
+	--bs-card-bg: #ffffff;
+
+	/* border */
+	--bs-border-color: #f2cfe0;
+}
+
+body {
+	background-color: var(--bs-body-bg);
+	color: var(--bs-body-color);
+}
+
+.navbar {
+	background: linear-gradient(90deg, rgba(231,84,128,0.08), rgba(255,214,232,0.06));
+}
+.navbar .navbar-brand {
+	color: var(--bs-primary) !important;
+	font-weight: 600;
+}
+.nav-link {
+	color: rgba(var(--bs-primary-rgb), 0.9) !important;
+}
+
+.btn-primary {
+	background-color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+	box-shadow: none;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+	background-color: #d23b6f !important;
+	border-color: #d23b6f !important;
+}
+
+.btn-success {
+	background-color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+	box-shadow: none;
+}
+.btn-success:hover,
+.btn-success:focus {
+	background-color: #d23b6f !important;
+	border-color: #d23b6f !important;
+}
+
+.btn-outline-success {
+	color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+}
+.btn-outline-success:hover {
+	background-color: rgba(var(--bs-primary-rgb), 0.08) !important;
+	color: #fff !important;
+}
+
+.btn-outline-primary {
+	color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+	background-color: var(--bs-primary) !important;
+	color: #fff !important;
+	border-color: var(--bs-primary) !important;
+}
+
+.bg-success {
+	background-color: var(--bs-primary) !important;
+}
+.text-success {
+	color: var(--bs-primary) !important;
+}
+
+.card {
+	border: 1px solid var(--bs-border-color);
+}
+
+a {
+	color: var(--bs-primary);
+}
+a:hover {
+	color: #d23b6f;
+}
+
+.form-control:focus {
+	border-color: var(--bs-primary) !important;
+	box-shadow: 0 0 0 0.15rem rgba(var(--bs-primary-rgb), 0.15) !important;
+}
+
+.card-header.bg-primary,
+.bg-primary {
+	background-color: var(--bs-primary) !important;
+	color: #fff !important;
+}
+
+.text-muted {
+	color: #6b4b55 !important;
+}
+
+.table {
+	background: transparent;
+}
+
+.badge-pink {
+	background: var(--bs-primary);
+	color: #fff;
+}
+
+@media (max-width: 576px) {
+	.navbar .btn {
+		margin-top: .5rem;
+	}
+}
